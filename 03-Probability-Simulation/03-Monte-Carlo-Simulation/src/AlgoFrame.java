@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 /**
+ * 蒙特卡洛算法
  * @author youyusong
  * @date 2018/10/16
  */
@@ -36,9 +38,12 @@ public class AlgoFrame extends JFrame {
     public int getCanvasWidth(){return canvasWidth;}
     public int getCanvasHeight(){return canvasHeight;}
 
-    private Object data;
-    public void render(Object data){
-        this.data = data;
+    private Circle circle;
+    private LinkedList<Point> points;
+
+    public void render(Circle circle, LinkedList<Point> points){
+        this.circle = circle;
+        this.points = points;
         repaint();
     }
 
@@ -63,7 +68,19 @@ public class AlgoFrame extends JFrame {
             g2d.addRenderingHints(hints);
 
             // 具体绘制
+            AlgoVisHelper.setStrokeWidth(g2d, 3);
+            AlgoVisHelper.setColor(g2d, AlgoVisHelper.Blue);
+            AlgoVisHelper.strokeCircle(g2d, circle.getX(), circle.getY(), circle.getR());
 
+            for (int i = 0; i <points.size(); i ++) {
+                Point point = points.get(i);
+                if (circle.contain(point)) {
+                    AlgoVisHelper.setColor(g2d, AlgoVisHelper.Red);
+                } else {
+                    AlgoVisHelper.setColor(g2d, AlgoVisHelper.Green);
+                }
+                AlgoVisHelper.fillCircle(g2d, point.x, point.y, 3);
+            }
         }
 
         @Override

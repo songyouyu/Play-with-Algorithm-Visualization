@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * 分钱模拟问题
  * @author youyusong
  * @date 2018/10/16
  */
@@ -36,9 +37,9 @@ public class AlgoFrame extends JFrame {
     public int getCanvasWidth(){return canvasWidth;}
     public int getCanvasHeight(){return canvasHeight;}
 
-    private Object data;
-    public void render(Object data){
-        this.data = data;
+    private int[] money;
+    public void render(int[] money){
+        this.money = money;
         repaint();
     }
 
@@ -63,7 +64,12 @@ public class AlgoFrame extends JFrame {
             g2d.addRenderingHints(hints);
 
             // 具体绘制
+            AlgoVisHelper.setColor(g2d, AlgoVisHelper.Blue);
 
+            int w = canvasWidth / money.length;
+            for(int i = 0 ; i < money.length ; i ++) {
+                AlgoVisHelper.fillRectangle(g2d, i*w+1, canvasHeight-money[i], w-1, money[i]);
+            }
         }
 
         @Override
